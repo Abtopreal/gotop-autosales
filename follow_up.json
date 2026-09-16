@@ -1,0 +1,57 @@
+{
+  "database": "GOTOP AUTOSALES FOLLOW-UP DATABASE",
+  "version": "1.0",
+
+  "follow_up_types": [
+    "ENQUIRY_FOLLOW_UP",
+    "ABANDONED_ORDER_FOLLOW_UP",
+    "PAYMENT_FOLLOW_UP",
+    "DELIVERY_FOLLOW_UP",
+    "POST_PURCHASE_FOLLOW_UP",
+    "REPEAT_PURCHASE_FOLLOW_UP"
+  ],
+
+  "follow_up_fields": [
+    "follow_up_id",
+    "customer_id",
+    "order_id",
+    "follow_up_type",
+    "message",
+    "scheduled_at",
+    "completed_at",
+    "status",
+    "customer_response",
+    "consent_status",
+    "notes"
+  ],
+
+  "statuses": [
+    "SCHEDULED",
+    "READY",
+    "SENT",
+    "RESPONDED",
+    "COMPLETED",
+    "CANCELLED"
+  ],
+
+  "rules": [
+    "Only follow up with customers or prospects where follow-up is permitted.",
+    "Respect customer requests to stop receiving follow-up messages.",
+    "Do not send spam or excessive messages.",
+    "Do not pressure customers to purchase.",
+    "Do not claim that an order has been paid, dispatched or delivered unless confirmed.",
+    "Use the latest confirmed order and product information.",
+    "Escalate complaints, disputes and unusual requests.",
+    "Record meaningful customer responses when appropriate."
+  ],
+
+  "default_sequence": [
+    "ENQUIRY_FOLLOW_UP",
+    "PAYMENT_FOLLOW_UP",
+    "DELIVERY_FOLLOW_UP",
+    "POST_PURCHASE_FOLLOW_UP",
+    "REPEAT_PURCHASE_FOLLOW_UP"
+  ],
+
+  "records": []
+}
