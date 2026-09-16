@@ -1,0 +1,50 @@
+{
+  "database": "GOTOP AUTOSALES ORDER DATABASE",
+  "version": "1.0",
+  "fields": [
+    "order_id",
+    "customer_id",
+    "product",
+    "quantity",
+    "unit_price_ngn",
+    "discount_percent",
+    "product_total_ngn",
+    "delivery_location",
+    "delivery_fee_ngn",
+    "order_total_ngn",
+    "payment_method",
+    "payment_status",
+    "fulfilment_status",
+    "order_status",
+    "created_at",
+    "updated_at",
+    "notes"
+  ],
+  "payment_statuses": [
+    "AWAITING_PAYMENT",
+    "AWAITING_VERIFICATION",
+    "PAID",
+    "FAILED",
+    "REFUNDED",
+    "DISPUTED"
+  ],
+  "fulfilment_statuses": [
+    "NOT_STARTED",
+    "PROCESSING",
+    "READY_FOR_DELIVERY",
+    "OUT_FOR_DELIVERY",
+    "READY_FOR_PICKUP",
+    "COMPLETED"
+  ],
+  "order_statuses": [
+    "DRAFT",
+    "CONFIRMED",
+    "PAYMENT_PENDING",
+    "PAID",
+    "FULFILLING",
+    "COMPLETED",
+    "CANCELLED",
+    "DISPUTED"
+  ],
+  "records": []
+}
