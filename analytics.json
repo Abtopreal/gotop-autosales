@@ -1,0 +1,64 @@
+{
+  "database": "GOTOP AUTOSALES ANALYTICS DATABASE",
+  "version": "1.0",
+
+  "metrics": [
+    "campaigns",
+    "leads",
+    "qualified_leads",
+    "customer_conversations",
+    "orders",
+    "paid_orders",
+    "completed_orders",
+    "revenue_ngn",
+    "average_order_value_ngn",
+    "repeat_customers",
+    "conversion_rate"
+  ],
+
+  "funnel_stages": [
+    "MARKETING",
+    "LEAD",
+    "QUALIFIED_LEAD",
+    "CONVERSATION",
+    "ORDER",
+    "PAYMENT",
+    "FULFILMENT",
+    "REPEAT_CUSTOMER"
+  ],
+
+  "report_periods": [
+    "DAILY",
+    "WEEKLY",
+    "MONTHLY",
+    "CUSTOM"
+  ],
+
+  "report_fields": [
+    "report_id",
+    "period",
+    "start_date",
+    "end_date",
+    "leads_generated",
+    "qualified_leads",
+    "orders_created",
+    "orders_paid",
+    "orders_completed",
+    "revenue_ngn",
+    "repeat_customers",
+    "conversion_rate",
+    "notes"
+  ],
+
+  "rules": [
+    "Use recorded data only.",
+    "Do not invent sales, leads, payments or revenue.",
+    "Distinguish estimates from confirmed figures.",
+    "Revenue should be based on verified paid orders.",
+    "Conversion rates should be calculated from available recorded data.",
+    "Keep historical reports unchanged unless a correction is explicitly made.",
+    "Identify missing data rather than guessing."
+  ],
+
+  "records": []
+}
