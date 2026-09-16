@@ -1,0 +1,50 @@
+{
+  "database": "GOTOP AUTOSALES DELIVERY DATABASE",
+  "version": "1.0",
+  "currency": "NGN",
+
+  "delivery_rules": {
+    "ibadan": {
+      "complete_12_tubes_fee": 1000,
+      "remainder_1_to_9_fee": 500
+    },
+
+    "outside_ibadan": {
+      "complete_12_tubes_fee": 2500,
+      "remainder_1_to_9_fee": 1500
+    }
+  },
+
+  "calculation_rule": "For every complete block of 12 tubes, charge the complete-block fee. If there is a remainder of 1 to 9 tubes, add the applicable remainder fee. If the remainder is zero, do not add a remainder fee.",
+
+  "examples": {
+    "ibadan": {
+      "1_to_9": 500,
+      "10_to_12": 1000,
+      "13": 1500,
+      "20": 1500,
+      "24": 2000,
+      "50": 4500
+    },
+
+    "outside_ibadan": {
+      "1_to_9": 1500,
+      "10_to_12": 2500,
+      "13": 4000,
+      "20": 4000,
+      "24": 5000,
+      "50": 11500
+    }
+  },
+
+  "fulfilment_statuses": [
+    "NOT_STARTED",
+    "PROCESSING",
+    "READY_FOR_DELIVERY",
+    "OUT_FOR_DELIVERY",
+    "READY_FOR_PICKUP",
+    "COMPLETED"
+  ],
+
+  "records": []
+}
