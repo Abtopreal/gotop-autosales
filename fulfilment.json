@@ -1,0 +1,62 @@
+{
+  "database": "GOTOP AUTOSALES FULFILMENT DATABASE",
+  "version": "1.0",
+
+  "workflow": [
+    {
+      "step": 1,
+      "status": "PAYMENT_VERIFIED",
+      "action": "Confirm that payment has been verified before fulfilment begins."
+    },
+    {
+      "step": 2,
+      "status": "PROCESSING",
+      "action": "Prepare the confirmed and paid order."
+    },
+    {
+      "step": 3,
+      "status": "READY_FOR_DELIVERY",
+      "action": "Prepare the order for dispatch when delivery is selected."
+    },
+    {
+      "step": 4,
+      "status": "OUT_FOR_DELIVERY",
+      "action": "Mark the order as dispatched only when it has actually been handed over for delivery."
+    },
+    {
+      "step": 5,
+      "status": "READY_FOR_PICKUP",
+      "action": "Prepare the order for customer pickup when pickup is selected."
+    },
+    {
+      "step": 6,
+      "status": "COMPLETED",
+      "action": "Mark the order completed only after fulfilment has been completed."
+    }
+  ],
+
+  "rules": [
+    "Never begin fulfilment based only on a customer's claim of payment.",
+    "Payment must be verified before an order is treated as paid.",
+    "Never invent delivery or pickup status.",
+    "Never mark an order completed before fulfilment is completed.",
+    "Keep the customer informed of confirmed status changes.",
+    "Escalate delivery problems, disputes, or unusual fulfilment requests."
+  ],
+
+  "fulfilment_methods": [
+    "DELIVERY",
+    "PICKUP"
+  ],
+
+  "statuses": [
+    "NOT_STARTED",
+    "PROCESSING",
+    "READY_FOR_DELIVERY",
+    "OUT_FOR_DELIVERY",
+    "READY_FOR_PICKUP",
+    "COMPLETED"
+  ],
+
+  "records": []
+}
