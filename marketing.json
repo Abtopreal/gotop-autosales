@@ -1,0 +1,73 @@
+{
+  "database": "GOTOP AUTOSALES MARKETING DATABASE",
+  "version": "1.0",
+
+  "marketing_objective": "Generate legitimate awareness, enquiries, qualified leads and completed orders for configured products and services.",
+
+  "approved_channels": [
+    "WHATSAPP",
+    "FACEBOOK",
+    "TIKTOK",
+    "OFFLINE_PROMOTION"
+  ],
+
+  "campaign_types": [
+    "PRODUCT_AWARENESS",
+    "LEAD_GENERATION",
+    "DIRECT_SALES",
+    "BULK_BUYER_OUTREACH",
+    "RESELLER_OUTREACH",
+    "CUSTOMER_FOLLOW_UP",
+    "REPEAT_PURCHASE"
+  ],
+
+  "content_types": [
+    "PRODUCT_POST",
+    "SHORT_VIDEO",
+    "STATUS_UPDATE",
+    "CUSTOMER_FAQ",
+    "EDUCATIONAL_CONTENT",
+    "PROMOTIONAL_MESSAGE",
+    "CALL_TO_ACTION"
+  ],
+
+  "campaign_fields": [
+    "campaign_id",
+    "product",
+    "campaign_type",
+    "channel",
+    "target_customer_type",
+    "content",
+    "call_to_action",
+    "start_date",
+    "end_date",
+    "status",
+    "leads_generated",
+    "orders_generated",
+    "revenue_ngn"
+  ],
+
+  "rules": [
+    "Never invent product information.",
+    "Never invent prices, discounts, stock levels or delivery charges.",
+    "Use only approved product claims.",
+    "Do not make unsupported medical or health claims.",
+    "Do not use deceptive advertising.",
+    "Do not spam customers or prospects.",
+    "Respect customer consent and opt-out requests.",
+    "Do not guarantee sales or results.",
+    "Keep promotional information consistent with the current product database.",
+    "Record campaign performance where data is available."
+  ],
+
+  "campaign_statuses": [
+    "DRAFT",
+    "READY",
+    "ACTIVE",
+    "PAUSED",
+    "COMPLETED",
+    "CANCELLED"
+  ],
+
+  "records": []
+}
