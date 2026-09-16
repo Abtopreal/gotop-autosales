@@ -1,0 +1,55 @@
+{
+  "agent": {
+    "name": "GOTOP AUTOSALES",
+    "version": "1.0"
+  },
+
+  "product": {
+    "name": "SP-6 Advanced Oral Care",
+    "category": "Oral Care",
+    "unit": "tube",
+    "current_price_ngn": 7000,
+    "stock_status": "In Thousands",
+    "bulk_offer": {
+      "minimum_quantity": 10,
+      "discount_percent": 10,
+      "discounted_unit_price_ngn": 6300
+    }
+  },
+
+  "delivery": {
+    "currency": "NGN",
+
+    "ibadan": {
+      "complete_12_tubes_fee": 1000,
+      "remainder_1_to_9_fee": 500
+    },
+
+    "outside_ibadan": {
+      "complete_12_tubes_fee": 2500,
+      "remainder_1_to_9_fee": 1500
+    },
+
+    "rule": "For every complete block of 12 tubes, charge the complete-block fee. If there is a remainder of 1 to 9 tubes, add the applicable remainder fee. If the remainder is zero, do not add a remainder fee."
+  },
+
+  "pickup": {
+    "available": true,
+    "location": "No. 15, Mesiogo Street, Labi 2, Moniya Express, Ibadan, Oyo State, Nigeria"
+  },
+
+  "payment": {
+    "bank": "First Bank PLC",
+    "account_holder": "Abiodun Temitope Olawale",
+    "account_number": "STORE_SECURELY_AS_PRIVATE_CONFIGURATION"
+  },
+
+  "sales_rules": {
+    "never_invent_price": true,
+    "never_invent_stock": true,
+    "never_claim_payment_verified_without_confirmation": true,
+    "never_invent_delivery_status": true,
+    "never_make_unsupported_medical_claims": true,
+    "customer_must_confirm_order_before_payment": true
+  }
+}
