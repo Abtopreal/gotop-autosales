@@ -1,0 +1,36 @@
+{
+  "database": "GOTOP AUTOSALES PAYMENT DATABASE",
+  "version": "1.0",
+  "fields": [
+    "payment_id",
+    "order_id",
+    "customer_id",
+    "amount_ngn",
+    "payment_method",
+    "bank",
+    "payment_reference",
+    "payment_status",
+    "verification_status",
+    "payment_date",
+    "verified_at",
+    "notes"
+  ],
+  "payment_statuses": [
+    "PENDING",
+    "CUSTOMER_CLAIMED_PAID",
+    "VERIFIED",
+    "FAILED",
+    "REFUNDED",
+    "DISPUTED"
+  ],
+  "verification_statuses": [
+    "NOT_VERIFIED",
+    "PENDING_VERIFICATION",
+    "VERIFIED",
+    "FAILED"
+  ],
+  "approved_payment_methods": [
+    "BANK_TRANSFER"
+  ],
+  "records": []
+}
