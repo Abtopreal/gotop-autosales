@@ -1,0 +1,44 @@
+{
+  "database": "GOTOP AUTOSALES CUSTOMER DATABASE",
+  "version": "1.0",
+  "fields": [
+    "customer_id",
+    "name",
+    "phone",
+    "location",
+    "customer_type",
+    "lead_status",
+    "intent",
+    "quantity_interest",
+    "product",
+    "source",
+    "consent_to_follow_up",
+    "notes",
+    "created_at",
+    "updated_at"
+  ],
+  "lead_statuses": [
+    "HOT",
+    "WARM",
+    "COLD",
+    "INFORMATION_ONLY"
+  ],
+  "customer_types": [
+    "INDIVIDUAL",
+    "FAMILY",
+    "RETAILER",
+    "RESELLER",
+    "DISTRIBUTOR",
+    "BUSINESS"
+  ],
+  "intents": [
+    "INFORMATION",
+    "BUYING",
+    "BULK_RESELLING",
+    "SUPPORT_COMPLAINT",
+    "PAYMENT",
+    "DELIVERY",
+    "OTHER"
+  ],
+  "records": []
+}
