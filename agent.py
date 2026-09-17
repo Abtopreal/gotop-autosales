@@ -4,6 +4,7 @@ from order_engine import create_order
 from payment_engine import create_payment_record
 from fulfilment_engine import create_fulfilment
 from follow_up_engine import create_follow_up
+from ai_engine import generate_sales_response
 
 
 class GotopAutoSalesAgent:
@@ -66,6 +67,19 @@ class GotopAutoSalesAgent:
 
         return result
 
+    def ask_ai(
+        self,
+        customer_message,
+        sales_brain,
+        product_information
+    ):
+
+        return generate_sales_response(
+            customer_message=customer_message,
+            sales_brain=sales_brain,
+            product_information=product_information
+        )
+
     def prepare_fulfilment(
         self,
         order_id,
@@ -113,31 +127,16 @@ if __name__ == "__main__":
 
     agent = GotopAutoSalesAgent()
 
-    result = agent.receive_message(
-        message="I want to buy 10 tubes",
-        name="Test Customer",
-        phone="",
-        location="Ibadan",
-        customer_type="INDIVIDUAL",
-        quantity=10,
-        source="WHATSAPP",
-        consent_to_follow_up=True
-    )
-
     print("\n====================================")
     print("      GOTOP AUTOSALES AGENT")
     print("====================================")
 
-    print("\nCUSTOMER")
-    print(result["customer"])
+    print("\nAgent initialized successfully.")
 
-    print("\nCONVERSATION")
-    print(result["conversation"])
+    print("\nAI connection function:")
+    print("ask_ai() is ready.")
 
-    print("\nORDER")
-    print(result["order"])
-
-    print("\nPAYMENT")
-    print(result["payment"])
+    print("\nNext stage:")
+    print("Secure API configuration and live AI test.")
 
     print("\n====================================")
