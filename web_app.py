@@ -8,13 +8,13 @@ app = Flask(__name__)
 BASE_DIR = Path(__file__).parent
 
 
-def load_product_information():
+def load_product():
     with open(
         BASE_DIR / "product_database.json",
         "r",
         encoding="utf-8"
     ) as file:
-        return json.dumps(json.load(file), indent=2)
+        return json.load(file)
 
 
 def load_sales_brain():
@@ -26,7 +26,7 @@ def load_sales_brain():
         return file.read()
 
 
-HOME_PAGE = """
+HTML = """
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,39 +36,33 @@ HOME_PAGE = """
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #f7f3f5;
+            background: #f5f5f5;
             margin: 0;
             padding: 0;
         }
 
-        .header {
-            background: #8b1458;
-            color: white;
-            padding: 22px;
-            text-align: center;
-        }
-
-        .header h1 {
-            margin: 0;
-            font-size: 26px;
-        }
-
-        .header p {
-            margin: 6px 0 0;
-        }
-
-        .chat {
-            max-width: 700px;
-            margin: 20px auto;
-            padding: 15px;
-        }
-
-        #messages {
-            min-height: 300px;
+        .container {
+            max-width: 600px;
+            margin: auto;
             background: white;
-            border-radius: 12px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: #111;
+            color: white;
+            padding: 18px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        #chat {
+            flex: 1;
             padding: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow-y: auto;
         }
 
         .message {
@@ -79,81 +73,116 @@ HOME_PAGE = """
         }
 
         .user {
-            background: #eee;
+            background: #e8f0fe;
             text-align: right;
         }
 
         .agent {
-            background: #f3d9e8;
+            background: #f1f1f1;
+            text-align: left;
         }
 
         .input-area {
             display: flex;
             gap: 8px;
-            margin-top: 15px;
+            padding: 12px;
+            border-top: 1px solid #ddd;
+            background: white;
         }
 
-        input {
+        #message {
             flex: 1;
-            padding: 14px;
-            border: 1px solid #ccc;
+            padding: 12px;
+            border: 1px solid #bbb;
             border-radius: 8px;
             font-size: 16px;
+            outline: none;
         }
 
-        button {
-            background: #8b1458;
-            color: white;
+        #send {
+            padding: 12px 18px;
             border: none;
-            padding: 14px 18px;
             border-radius: 8px;
+            background: #111;
+            color: white;
             font-size: 16px;
+            cursor: pointer;
         }
 
-        button:disabled {
-            opacity: 0.6;
+        #send:disabled {
+            background: #aaa;
+            cursor: not-allowed;
         }
     </style>
 </head>
 
 <body>
 
-<div class="header">
-    <h1>GOTOP AUTOSALES</h1>
-    <p>AI-Powered Sales Agent</p>
-</div>
+<div class="container">
 
-<div class="chat">
+    <div class="header">
+        GOTOP AUTOSALES
+    </div>
 
-    <div id="messages">
+    <div id="chat">
         <div class="message agent">
-            <strong>GOTOP AUTOSALES:</strong><br>
-            Hello! I'm your GOTOP AUTOSALES agent.
-            How can I help you today?
+            Hello! I am GOTOP AUTOSALES. How can I help you today?
         </div>
     </div>
 
     <div class="input-area">
+
         <input
             id="message"
             type="text"
             placeholder="Type your message..."
+            autocomplete="off"
         >
 
-        <button id="sendButton" onclick="sendMessage()">
+        <button
+            id="send"
+            type="button"
+            disabled
+        >
             Send
         </button>
+
     </div>
 
 </div>
 
 <script>
 
-async function sendMessage() {
+const input = document.getElementById("message");
+const sendButton = document.getElementById("send");
+const chat = document.getElementById("chat");
 
-    const input = document.getElementById("message");
-    const button = document.getElementById("sendButton");
-    const messages = document.getElementById("messages");
+
+function addMessage(text, type) {
+
+    const message = document.createElement("div");
+
+    message.className = "message " + type;
+
+    message.textContent = text;
+
+    chat.appendChild(message);
+
+    chat.scrollTop = chat.scrollHeight;
+}
+
+
+function updateSendButton() {
+
+    sendButton.disabled = input.value.trim() === "";
+
+}
+
+
+input.addEventListener("input", updateSendButton);
+
+
+async function sendMessage() {
 
     const message = input.value.trim();
 
@@ -161,64 +190,92 @@ async function sendMessage() {
         return;
     }
 
-    messages.innerHTML +=
-        '<div class="message user"><strong>You:</strong><br>' +
-        message +
-        '</div>';
+    addMessage(message, "user");
 
     input.value = "";
-    button.disabled = true;
-    button.innerText = "Thinking...";
+
+    updateSendButton();
+
+    sendButton.disabled = true;
+
+    sendButton.textContent = "Sending...";
 
     try {
 
         const response = await fetch("/chat", {
+
             method: "POST",
+
             headers: {
                 "Content-Type": "application/json"
             },
+
             body: JSON.stringify({
                 message: message
             })
+
         });
+
 
         const data = await response.json();
 
+
         if (data.response) {
 
-            messages.innerHTML +=
-                '<div class="message agent"><strong>GOTOP AUTOSALES:</strong><br>' +
-                data.response.replace(/\n/g, "<br>") +
-                '</div>';
+            addMessage(data.response, "agent");
+
+        } else if (data.error) {
+
+            addMessage(
+                "Error: " + data.error,
+                "agent"
+            );
 
         } else {
 
-            messages.innerHTML +=
-                '<div class="message agent"><strong>Error:</strong><br>' +
-                (data.error || "Unable to respond.") +
-                '</div>';
+            addMessage(
+                "Sorry, I could not process that message.",
+                "agent"
+            );
+
         }
 
     } catch (error) {
 
-        messages.innerHTML +=
-            '<div class="message agent"><strong>Error:</strong><br>' +
-            'The AI service could not be reached.' +
-            '</div>';
+        addMessage(
+            "Connection error. Please try again.",
+            "agent"
+        );
+
     }
 
-    button.disabled = false;
-    button.innerText = "Send";
+
+    sendButton.textContent = "Send";
+
+    updateSendButton();
+
 }
 
-document.getElementById("message").addEventListener(
-    "keydown",
-    function(event) {
-        if (event.key === "Enter") {
+
+sendButton.addEventListener("click", sendMessage);
+
+
+input.addEventListener("keydown", function(event) {
+
+    if (event.key === "Enter") {
+
+        event.preventDefault();
+
+        if (!sendButton.disabled) {
             sendMessage();
         }
+
     }
-);
+
+});
+
+
+updateSendButton();
 
 </script>
 
@@ -229,7 +286,7 @@ document.getElementById("message").addEventListener(
 
 @app.route("/")
 def home():
-    return render_template_string(HOME_PAGE)
+    return render_template_string(HTML)
 
 
 @app.route("/health")
@@ -242,42 +299,48 @@ def health():
 @app.route("/chat", methods=["POST"])
 def chat():
 
-    data = request.get_json(silent=True) or {}
+    data = request.get_json()
 
-    customer_message = data.get("message", "").strip()
-
-    if not customer_message:
+    if not data:
         return jsonify({
-            "error": "Customer message is required."
+            "error": "No data received."
+        }), 400
+
+    message = data.get("message", "").strip()
+
+    if not message:
+        return jsonify({
+            "error": "Message is empty."
         }), 400
 
     try:
 
-        sales_brain = load_sales_brain()
-        product_information = load_product_information()
+        product_information = json.dumps(
+            load_product(),
+            indent=2
+        )
 
-        answer = generate_sales_response(
-            customer_message=customer_message,
+        sales_brain = load_sales_brain()
+
+        response = generate_sales_response(
+            customer_message=message,
             sales_brain=sales_brain,
             product_information=product_information
         )
 
         return jsonify({
-            "agent": "GOTOP AUTOSALES",
-            "customer_message": customer_message,
-            "response": answer
+            "response": response
         })
 
     except Exception as error:
 
         return jsonify({
-            "error": "AI service is not currently available.",
-            "details": str(error)
+            "error": str(error)
         }), 500
 
 
 if __name__ == "__main__":
     app.run(
         host="0.0.0.0",
-        port=5000
+        port=10000
     )
