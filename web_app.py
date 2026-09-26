@@ -138,7 +138,6 @@ HOME_PAGE = """
             id="message"
             type="text"
             placeholder="Type your message..."
-            onkeydown="if(event.key==='Enter') sendMessage()"
         >
 
         <button id="sendButton" onclick="sendMessage()">
@@ -174,17 +173,13 @@ async function sendMessage() {
     try {
 
         const response = await fetch("/chat", {
-
             method: "POST",
-
             headers: {
                 "Content-Type": "application/json"
             },
-
             body: JSON.stringify({
                 message: message
             })
-
         });
 
         const data = await response.json();
@@ -200,23 +195,30 @@ async function sendMessage() {
 
             messages.innerHTML +=
                 '<div class="message agent"><strong>Error:</strong><br>' +
-                (data.error || "Unable to respond.")
-                + '</div>';
+                (data.error || "Unable to respond.") +
+                '</div>';
         }
 
     } catch (error) {
 
         messages.innerHTML +=
             '<div class="message agent"><strong>Error:</strong><br>' +
-            'The AI service could not be reached.'
-            + '</div>';
+            'The AI service could not be reached.' +
+            '</div>';
     }
 
     button.disabled = false;
     button.innerText = "Send";
-
-    messages.scrollTop = messages.scrollHeight;
 }
+
+document.getElementById("message").addEventListener(
+    "keydown",
+    function(event) {
+        if (event.key === "Enter") {
+            sendMessage();
+        }
+    }
+);
 
 </script>
 
@@ -275,42 +277,6 @@ def chat():
 
 
 if __name__ == "__main__":
-
-    app.run(
-        host="0.0.0.0",
-        port=5000
-    )        "Follow the GOTOP AUTOSALES sales rules."
-    )
-
-    product_information = data.get(
-        "product_information",
-        "Use the configured GOTOP AUTOSALES product information."
-    )
-
-    try:
-
-        answer = generate_sales_response(
-            customer_message=customer_message,
-            sales_brain=sales_brain,
-            product_information=product_information
-        )
-
-        return jsonify({
-            "agent": "GOTOP AUTOSALES",
-            "customer_message": customer_message,
-            "response": answer
-        })
-
-    except Exception as error:
-
-        return jsonify({
-            "error": "AI service is not currently available.",
-            "details": str(error)
-        }), 500
-
-
-if __name__ == "__main__":
-
     app.run(
         host="0.0.0.0",
         port=5000
