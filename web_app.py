@@ -30,39 +30,53 @@ HTML = """
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>GOTOP AUTOSALES</title>
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
             margin: 0;
             padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+        }
+
+        body {
+            overflow: hidden;
         }
 
         .container {
+            width: 100%;
             max-width: 600px;
+            height: 100dvh;
             margin: auto;
             background: white;
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
         .header {
+            flex: 0 0 auto;
             background: #111;
             color: white;
-            padding: 18px;
+            padding: 16px;
             text-align: center;
             font-size: 22px;
             font-weight: bold;
         }
 
         #chat {
-            flex: 1;
+            flex: 1 1 auto;
+            min-height: 0;
             padding: 15px;
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .message {
@@ -70,6 +84,7 @@ HTML = """
             padding: 12px;
             border-radius: 10px;
             line-height: 1.5;
+            overflow-wrap: anywhere;
         }
 
         .user {
@@ -83,15 +98,18 @@ HTML = """
         }
 
         .input-area {
+            flex: 0 0 auto;
             display: flex;
             gap: 8px;
-            padding: 12px;
+            padding: 10px;
+            padding-bottom: calc(10px + env(safe-area-inset-bottom));
             border-top: 1px solid #ddd;
             background: white;
         }
 
         #message {
-            flex: 1;
+            flex: 1 1 auto;
+            min-width: 0;
             padding: 12px;
             border: 1px solid #bbb;
             border-radius: 8px;
@@ -99,19 +117,60 @@ HTML = """
             outline: none;
         }
 
+        #message:focus {
+            border-color: #111;
+        }
+
         #send {
-            padding: 12px 18px;
+            flex: 0 0 auto;
+            padding: 12px 16px;
+            min-width: 72px;
             border: none;
             border-radius: 8px;
             background: #111;
             color: white;
             font-size: 16px;
             cursor: pointer;
+            touch-action: manipulation;
         }
 
         #send:disabled {
             background: #aaa;
             cursor: not-allowed;
+        }
+
+        @media (max-width: 480px) {
+
+            .header {
+                padding: 14px 10px;
+                font-size: 19px;
+            }
+
+            #chat {
+                padding: 10px;
+            }
+
+            .message {
+                padding: 10px;
+                font-size: 15px;
+            }
+
+            .input-area {
+                gap: 6px;
+                padding: 8px;
+                padding-bottom: calc(8px + env(safe-area-inset-bottom));
+            }
+
+            #message {
+                padding: 11px;
+                font-size: 16px;
+            }
+
+            #send {
+                padding: 11px 13px;
+                min-width: 68px;
+                font-size: 15px;
+            }
         }
     </style>
 </head>
@@ -343,4 +402,4 @@ if __name__ == "__main__":
     app.run(
         host="0.0.0.0",
         port=10000
-    )
+)
