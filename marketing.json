@@ -69,5 +69,20 @@
     "CANCELLED"
   ],
 
-  "records": []
-}
+"records": [
+  {
+    "campaign_id": "LANDINI_NIGERIA_DISTRIBUTOR_2026",
+    "product": "Landini Tractors",
+    "campaign_type": "DISTRIBUTOR_OUTREACH",
+    "channel": "WHATSAPP",
+    "target_customer_type": "PROSPECTIVE_DISTRIBUTORS_AND_STRATEGIC_PARTNERS",
+    "content": "Landini Tractors Manufacturing Company, Italy is seeking strategic partners, distributors and dealers nationwide in Nigeria.",
+    "call_to_action": "Contact Mr. Leonardo, Chief Coordinator and Strategist, for further information and distributor/dealer enquiries.",
+    "start_date": "",
+    "end_date": "",
+    "status": "READY",
+    "leads_generated": 0,
+    "orders_generated": 0,
+    "revenue_ngn": 0
+  }
+]
