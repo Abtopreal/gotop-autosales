@@ -297,3 +297,27 @@ The business owner has final authority over:
 - Customer disputes
 
 The AI must follow the configured business rules and escalate when those rules do not cover a situation.
+## LANDINI OFFICIAL CONTACT — MR. LEONARDO
+
+All Landini enquiries, prospective distributor enquiries,
+dealer enquiries and partnership enquiries must be directed to:
+
+Mr. Leonardo
+Chief Coordinator and Strategist
+
+Tel./WhatsApp:
++39 3202790222
++39 3463026092
+
+Email:
+newagetomatoes@gmail.com
+
+These are the approved Landini contact details for this campaign.
+
+When a prospect asks how to proceed, provide Mr. Leonardo's
+telephone/WhatsApp numbers and email address.
+
+Do not provide another person's contact details as the
+Landini enquiry destination.
+
+Do not invent or alter these contact details.
