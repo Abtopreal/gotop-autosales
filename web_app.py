@@ -356,9 +356,10 @@ def health():
 
 
 @app.route("/chat", methods=["POST"])
+@app.route("/chat", methods=["POST"])
 def chat():
 
-    data = request.get_json()
+    data = request.get_json(silent=True)
 
     if not data:
         return jsonify({
@@ -371,6 +372,38 @@ def chat():
         return jsonify({
             "error": "Message is empty."
         }), 400
+
+    text = message.lower()
+
+    landini_keywords = [
+        "landini",
+        "tractor distributor",
+        "tractor dealer",
+        "tractors dealer",
+        "tractors distributor",
+        "agricultural machinery distributor",
+        "landini partnership"
+    ]
+
+    if any(word in text for word in landini_keywords):
+
+        response = (
+            "Thank you for your interest in Landini Tractors. "
+            "For enquiries about becoming a distributor, dealer, "
+            "or strategic partner in Nigeria, please contact:\n\n"
+            "Mr. Leonardo\n"
+            "Chief Coordinator and Strategist\n\n"
+            "Telephone/WhatsApp:\n"
+            "+39 3202790222\n"
+            "+39 3463026092\n\n"
+            "Email: newagetomatoes@gmail.com\n\n"
+            "Please contact Mr. Leonardo directly for further "
+            "information about the opportunity and requirements."
+        )
+
+        return jsonify({
+            "response": response
+        })
 
     try:
 
