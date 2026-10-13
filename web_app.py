@@ -356,62 +356,172 @@ def health():
 
 
 @app.route("/chat", methods=["POST"])
-@app.route("/chat", methods=["POST"])
 def chat():
 
     data = request.get_json(silent=True)
 
     if not data:
-        return jsonify({
-            "error": "No data received."
-        }), 400
+        return jsonify({"error": "No data received."}), 400
 
     message = data.get("message", "").strip()
 
     if not message:
-        return jsonify({
-            "error": "Message is empty."
-        }), 400
+        return jsonify({"error": "Message is empty."}), 400
 
     text = message.lower()
 
+    # LANDINI ENQUIRIES
     landini_keywords = [
-        "landini",
-        "tractor distributor",
-        "tractor dealer",
-        "tractors dealer",
-        "tractors distributor",
+        "landini", "tractor distributor", "tractor dealer",
+        "tractors distributor", "tractors dealer",
         "agricultural machinery distributor",
         "landini partnership"
     ]
 
     if any(word in text for word in landini_keywords):
-
-        response = (
-            "Thank you for your interest in Landini Tractors. "
-            "For enquiries about becoming a distributor, dealer, "
-            "or strategic partner in Nigeria, please contact:\n\n"
-            "Mr. Leonardo\n"
-            "Chief Coordinator and Strategist\n\n"
-            "Telephone/WhatsApp:\n"
-            "+39 3202790222\n"
-            "+39 3463026092\n\n"
-            "Email: newagetomatoes@gmail.com\n\n"
-            "Please contact Mr. Leonardo directly for further "
-            "information about the opportunity and requirements."
-        )
-
         return jsonify({
-            "response": response
+            "response": (
+                "Thank you for your interest in Landini Tractors.\n\n"
+                "For distributor, dealer and strategic partnership "
+                "enquiries in Nigeria, contact:\n\n"
+                "Mr. Leonardo\n"
+                "Chief Coordinator and Strategist\n\n"
+                "Telephone/WhatsApp:\n"
+                "+39 3202790222\n"
+                "+39 3463026092\n\n"
+                "Email: newagetomatoes@gmail.com\n\n"
+                "Please contact Mr. Leonardo for further information "
+                "about the opportunity and requirements."
+            )
         })
 
+    # SP-6 ENQUIRIES
+    sp6_keywords = [
+        "sp-6", "sp6", "advanced oral care",
+        "oral care", "toothpaste"
+    ]
+
+    if any(word in text for word in sp6_keywords):
+
+        try:
+            products = load_product()
+            delivery = json.loads(
+                (BASE_DIR / "delivery.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+
+            product = None
+
+            if isinstance(products, dict):
+                if "product_name" in products:
+                    product = products
+                else:
+                    for value in products.values():
+                        if isinstance(value, dict) and (
+                            "SP-6" in str(value.get("name", "")).upper()
+                            or "SP-6" in str(
+                                value.get("product_name", "")
+                            ).upper()
+                        ):
+                            product = value
+                            break
+
+            if product is None:
+                return jsonify({
+                    "response": (
+                        "Thank you for your interest in SP-6 Advanced "
+                        "Oral Care. Please contact GOTOP AUTOSALES "
+                        "for product and order assistance."
+                    )
+                })
+
+            price = product.get("current_price_ngn", 7000)
+            bulk = product.get("bulk_offer", {})
+            minimum = bulk.get("minimum_quantity", 10)
+            bulk_price = bulk.get("discounted_unit_price_ngn", 6300)
+
+            response = (
+                "GOTOP AUTOSALES — SP-6 ADVANCED ORAL CARE\n\n"
+                f"Price per tube: ₦{price:,}\n"
+                f"Bulk offer: {minimum} tubes or more at "
+                f"₦{bulk_price:,} per tube.\n\n"
+            )
+
+            quantity_numbers = [
+                int(number) for number in __import__("re").findall(
+                    r"\b\d+\b", text
+                )
+            ]
+
+            quantity = quantity_numbers[0] if quantity_numbers else None
+
+            if any(word in text for word in [
+                "delivery", "deliver", "shipping", "transport"
+            ]) and quantity is not None and quantity > 0:
+
+                location = (
+                    "ibadan" if "ibadan" in text
+                    else "outside_ibadan"
+                )
+
+                rules = delivery["delivery_rules"][location]
+
+                complete_blocks = quantity // 12
+                remainder = quantity % 12
+
+                fee = (
+                    complete_blocks
+                    * rules["complete_12_tubes_fee"]
+                )
+
+                if 1 <= remainder <= 9:
+                    fee += rules["remainder_1_to_9_fee"]
+
+                response += (
+                    f"Quantity: {quantity} tube(s)\n"
+                    f"Delivery location category: "
+                    f"{'Ibadan' if location == 'ibadan' else 'Outside Ibadan'}\n"
+                    f"Delivery fee: ₦{fee:,}\n"
+                    f"Product subtotal: ₦{price * quantity:,}\n"
+                    f"Total before any applicable bulk discount: "
+                    f"₦{price * quantity + fee:,}\n\n"
+                    "Please confirm your order and delivery location "
+                    "before making payment."
+                )
+
+            elif any(word in text for word in [
+                "price", "cost", "buy", "order", "quantity",
+                "bulk", "discount", "how much"
+            ]):
+
+                response += (
+                    "Please tell us how many tubes you need and "
+                    "whether delivery is within Ibadan or outside "
+                    "Ibadan so we can calculate the applicable "
+                    "delivery fee."
+                )
+
+            else:
+                response += (
+                    "Please tell us whether you need product "
+                    "information, pricing, a bulk order, or delivery "
+                    "information."
+                )
+
+            return jsonify({"response": response})
+
+        except Exception:
+            return jsonify({
+                "response": (
+                    "We could not retrieve the product or delivery "
+                    "information. Please try again."
+                )
+            })
+
+    # OTHER ENQUIRIES USE THE EXISTING AI SYSTEM
     try:
-
-        product_information = json.dumps(
-            load_product(),
-            indent=2
-        )
-
+        product_information = json.dumps(load_product(), indent=2)
         sales_brain = load_sales_brain()
 
         response = generate_sales_response(
@@ -420,17 +530,10 @@ def chat():
             product_information=product_information
         )
 
-        return jsonify({
-            "response": response
-        })
+        return jsonify({"response": response})
 
     except Exception as error:
-
-        return jsonify({
-            "error": str(error)
-        }), 500
-
-
+        return jsonify({"error": str(error)}), 500
 if __name__ == "__main__":
     app.run(
         host="0.0.0.0",
