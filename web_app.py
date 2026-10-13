@@ -401,7 +401,16 @@ def chat():
         "oral care", "toothpaste"
     ]
 
-    if any(word in text for word in sp6_keywords):
+    if (
+    any(word in text for word in sp6_keywords)
+    or (
+        any(word in text for word in [
+            "delivery", "deliver", "shipping",
+            "transport", "tubes", "bulk order"
+        ])
+        and any(char.isdigit() for char in text)
+    )
+):
 
         try:
             products = load_product()
